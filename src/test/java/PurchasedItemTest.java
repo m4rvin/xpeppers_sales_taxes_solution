@@ -40,19 +40,18 @@ public class PurchasedItemTest
 			parsedPItem = PurchasedItemParser.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail();
 		}
 		
 		PurchasedItem pItem = mock(PurchasedItem.class);
-		pItem.setQuantity(1);
-		pItem.setCategory(ItemCategory.BOOKS);
-		pItem.setSellingPrice(12.49);
+		when(pItem.getQuantity()).thenReturn(1);
+		when(pItem.getCategory()).thenReturn(ItemCategory.BOOKS);
+		when(pItem.getSellingPrice()).thenReturn(12.49);
 		
-		//assertEquals(parsedPItem.getQuantity(), pItem.getQuantity());
-		//assertEquals(parsedPItem.getCategory(), pItem.getCategory());
-		//assertEquals(parsedPItem.getSellingPrice(), pItem.getSellingPrice(), 0);
+		assertEquals(parsedPItem.getQuantity(), pItem.getQuantity());
+		assertEquals(parsedPItem.getCategory(), pItem.getCategory());
+		assertEquals(parsedPItem.getSellingPrice(), pItem.getSellingPrice(), 0);
 
 
 	}
