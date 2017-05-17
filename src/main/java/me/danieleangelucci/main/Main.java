@@ -1,5 +1,9 @@
 package me.danieleangelucci.main;
 
+import me.danieleangelucci.commons.AppConfig;
+import me.danieleangelucci.shopping.Store;
+import me.danieleangelucci.shopping.UnloadableStoreException;
+
 public class Main
 {
 
@@ -8,12 +12,21 @@ public class Main
 		
 		checkCommandlineArgs(args);
 		
-		String categoriesFilePath = args[0];
-		String inputFilePath = args[1];
+		AppConfig.categoriesFilePath = args[0];
+		AppConfig.inputFilePath = args[1];
 
 		System.out.println("Welcome to \"Sales taxes problem\"!");
-		System.out.println("Loading categories file: " + categoriesFilePath);
-		System.out.println("Using input file: " + inputFilePath);
+		System.out.println("Loading categories file: " + AppConfig.categoriesFilePath);
+		System.out.println("Using input file: " + AppConfig.inputFilePath);
+		
+		try
+		{
+			Store store = Store.getStore();
+		} catch (UnloadableStoreException e)
+		{
+			e.printStackTrace();
+			System.exit(1);
+		}
 
 		
 	}
