@@ -4,8 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -32,7 +34,7 @@ public class Store
 		return store;
 	}
 	
-	public List<String> getItems(ItemCategory category) {
+	public Set<String> getItems(ItemCategory category) {
 		return categories.get(category);
 	}
 	
@@ -40,25 +42,11 @@ public class Store
 	
 	private static Store store = null;
 	
-	private Map<ItemCategory, List<String>> categories;
+	private Map<ItemCategory, Set<String>> categories;
 	
 	private Store(){
-		this.categories = new HashMap<ItemCategory, List<String>>();
+		this.categories = new HashMap<ItemCategory, Set<String>>();
 	}
-	
-	/*private static class Category {
-		public Category(ItemCategory categoryId){
-			this.categoryId = categoryId;
-			this.itemNames = new ArrayList<String>();
-		}
-		
-		public void addItem(String itemName) {
-			this.itemNames.add(itemName);
-		}
-		
-		private ItemCategory categoryId;
-		private List<String> itemNames;
-	}*/
 	
 	private static void loadStore() 
 			throws FileNotFoundException, MalformedStoreFileException{
@@ -104,7 +92,7 @@ public class Store
 		JsonObject jo = (JsonObject)root;
 		JsonArray catJson = jo.getAsJsonArray(categoryNameInFile);
 
-		List<String> catItems = new ArrayList<String>();
+		Set<String> catItems = new HashSet<String>();
 		for (JsonElement je : catJson) {
 			String itemName = je.getAsString();
 			catItems.add(itemName);

@@ -1,6 +1,6 @@
 import static org.junit.Assert.*;
 
-import java.util.List;
+import java.util.Set;
 
 import me.danieleangelucci.commons.AppConfig;
 import me.danieleangelucci.shopping.ItemCategory;
@@ -31,26 +31,26 @@ public class LoadStoreTest
 	@Test
 	public void loadBookCategoryTest()
 	{
-		List<String> bookItems = store.getItems(ItemCategory.BOOKS);
+		Set<String> bookItems = store.getItems(ItemCategory.BOOKS);
 		assertEquals(bookItems.size(), 1);
-		assertEquals(bookItems.get(0), "book");
+		assertTrue(bookItems.contains("book"));
 	}
 	
 	@Test
 	public void loadFoodCategoryTest()
 	{
-		List<String> foodItems = store.getItems(ItemCategory.FOOD);
+		Set<String> foodItems = store.getItems(ItemCategory.FOOD);
 		assertEquals(foodItems.size(), 2);
-		assertEquals(foodItems.get(0), "chocolate bar");
-		assertEquals(foodItems.get(1), "box of chocolates");
+		assertTrue(foodItems.contains("chocolate bar"));
+		assertTrue(foodItems.contains("box of chocolates"));
 	}
 	
 	@Test
 	public void loadMedicalProductsCategoryTest()
 	{
-		List<String> foodItems = store.getItems(ItemCategory.MEDICAL_PRODUCTS);
+		Set<String> foodItems = store.getItems(ItemCategory.MEDICAL_PRODUCTS);
 		assertEquals(foodItems.size(), 1);
-		assertEquals(foodItems.get(0), "packet of headache pills");
+		assertTrue(foodItems.contains("packet of headache pills"));
 	}
 
 }
