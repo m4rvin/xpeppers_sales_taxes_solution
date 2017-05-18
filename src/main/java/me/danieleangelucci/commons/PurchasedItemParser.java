@@ -77,9 +77,14 @@ public class PurchasedItemParser
 		try
 		{
 			Store store = Store.getStore();
-			for (ItemCategory ic : ItemCategory.values())
+			for (ItemCategory ic : ItemCategory.values()) {
+				//The OTHERS category has no elements. Do not analyze it.
+				if(ic.equals(ItemCategory.OTHERS))
+					continue;
 				if(store.getItems(ic).contains(itemName))
 					return ic;
+			}
+			//The item is not in the stored categories, so it is in OTHERS.
 			return ItemCategory.OTHERS;
 		} catch (UnloadableStoreException e)
 		{

@@ -70,5 +70,25 @@ public class PurchasedItemTest
 		assertTrue(parsedPItem.isImported());
 	}
 	
+	@Test
+	public void testImportedUnknownCategoryPurchasedItemParsing()
+	{
+		String testInput = "1 imported bottle of perfume at 27.99";
+		PurchasedItem parsedPItem = null;
+		try
+		{
+			parsedPItem = PurchasedItemParser.parseLine(testInput);
+		} catch (UnexpectedInputDataFormatException e)
+		{
+			e.printStackTrace();
+			fail();
+		}
+		
+		assertEquals(parsedPItem.getQuantity(), 1);
+		assertEquals(parsedPItem.getCategory(), ItemCategory.OTHERS);
+		assertEquals(parsedPItem.getSellingPrice(), 27.99, 0);
+		assertTrue(parsedPItem.isImported());
+	}
+	
 
 }
