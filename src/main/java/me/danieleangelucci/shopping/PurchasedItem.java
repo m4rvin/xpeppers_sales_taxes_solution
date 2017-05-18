@@ -1,5 +1,7 @@
 package me.danieleangelucci.shopping;
 
+import java.text.DecimalFormat;
+
 public class PurchasedItem extends Item
 {
 	public PurchasedItem() {}
@@ -57,6 +59,19 @@ public class PurchasedItem extends Item
 	{
 		this.quantity = quantity;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "PurchasedItem [finalPrice=" + finalPrice + ", quantity="
+				+ quantity + ", imported=" + imported + ", name="
+				+ getName() + ", category()=" + getCategory()
+				+ ", sellingPrice()=" + 
+				String.valueOf(
+						new DecimalFormat("0.00").format(getSellingPrice()))
+				+ "]";
+	}
+
 
 	private double finalPrice = 0.0;
 	private int quantity = 0;
