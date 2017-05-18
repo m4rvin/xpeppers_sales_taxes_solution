@@ -44,10 +44,30 @@ public class PurchasedItemTest
 			fail();
 		}
 		
-		
 		assertEquals(parsedPItem.getQuantity(), 1);
 		assertEquals(parsedPItem.getCategory(), ItemCategory.BOOKS);
 		assertEquals(parsedPItem.getSellingPrice(), 12.49, 0);
+		assertFalse(parsedPItem.isImported());
+	}
+	
+	@Test
+	public void testNonImportedUnknownCategoryPurchasedItemParsing()
+	{
+		String testInput = "1 music CD at 14.99";
+		PurchasedItem parsedPItem = null;
+		try
+		{
+			parsedPItem = PurchasedItemParser.parseLine(testInput);
+		} catch (UnexpectedInputDataFormatException e)
+		{
+			e.printStackTrace();
+			fail();
+		}
+		
+		assertEquals(parsedPItem.getQuantity(), 1);
+		assertEquals(parsedPItem.getCategory(), ItemCategory.OTHERS);
+		assertEquals(parsedPItem.getSellingPrice(), 14.99, 0);
+		assertFalse(parsedPItem.isImported());
 	}
 	
 	@Test
