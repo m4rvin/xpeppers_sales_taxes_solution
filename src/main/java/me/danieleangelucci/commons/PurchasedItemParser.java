@@ -1,5 +1,7 @@
 package me.danieleangelucci.commons;
 
+import java.text.DecimalFormat;
+
 import me.danieleangelucci.shopping.ItemCategory;
 import me.danieleangelucci.shopping.PurchasedItem;
 import me.danieleangelucci.shopping.Store;
@@ -44,7 +46,9 @@ public class PurchasedItemParser
 		
 		//Remove quantity and selling price, keeping monospaces
 		inputLine = removeSubstring(inputLine, String.valueOf(quantity));
-		inputLine = removeSubstring(inputLine, String.valueOf(sellingPrice));
+		inputLine = removeSubstring(
+				inputLine, 
+				String.valueOf(new DecimalFormat("0.00").format(sellingPrice)));
 		inputLine = inputLine.trim();
 
 		//Now inputLine only contains the item name. Use it to match 
