@@ -63,10 +63,11 @@ public class PurchasedItem extends Item
 	@Override
 	public String toString()
 	{
-		return "PurchasedItem [finalPrice=" + finalPrice + ", quantity="
+		return "PurchasedItem [finalPrice=" + String.valueOf(
+				new DecimalFormat("0.00").format(finalPrice)) + ", quantity="
 				+ quantity + ", imported=" + imported + ", name="
-				+ getName() + ", category()=" + getCategory()
-				+ ", sellingPrice()=" + 
+				+ getName() + ", category=" + getCategory()
+				+ ", sellingPrice=" + 
 				String.valueOf(
 						new DecimalFormat("0.00").format(getSellingPrice()))
 				+ "]";
