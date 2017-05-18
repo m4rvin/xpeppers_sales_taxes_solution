@@ -1,6 +1,7 @@
 package me.danieleangelucci.main;
 
 import me.danieleangelucci.commons.AppConfig;
+import me.danieleangelucci.shopping.ShoppingBasketAnalyzer;
 import me.danieleangelucci.shopping.Store;
 import me.danieleangelucci.shopping.UnloadableStoreException;
 
@@ -27,9 +28,14 @@ public class Main
 			e.printStackTrace();
 			System.exit(1);
 		}
+		
+		ShoppingBasketAnalyzer sbAnalyzer = new ShoppingBasketAnalyzer();
+		sbAnalyzer.printPurchasedItemFromInputFile();
+		//TODO
 
 		
 	}
+	
 	
 	private static void checkCommandlineArgs(String[] args) {
 		
