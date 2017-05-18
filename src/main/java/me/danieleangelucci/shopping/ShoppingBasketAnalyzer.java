@@ -19,22 +19,28 @@ public class ShoppingBasketAnalyzer
 		this.purchasedItems = new ArrayList<PurchasedItem>();
 	}
 	
-	public void printPurchasedItemFromInputFile() {
-		try
-		{
-			this.parsePurchasedItemFromInputFile();
-		} catch (UnreadableInputFileException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	public void computeFinalPriceOfPurchasedItem() {
 		for(PurchasedItem pi : this.purchasedItems) {
-			System.out.println(pi);
+			pi.setFinalPrice(pi.getSellingPrice());
+
+			//Apply 10% sales tax: Basic sales tax
+			if(pi.getCategory().equals(ItemCategory.OTHERS))
+			{
+				double salesTax = pi.getSellingPrice() * 10/100;
+				pi.setFinalPrice(pi.getFinalPrice() + salesTax);
+			}
+			//Apply 5% sales tax: Import duty 
+			if(pi.isImported())
+			{
+				double salesTax = pi.getSellingPrice() * 5/100;
+				pi.setFinalPrice(pi.getFinalPrice() + salesTax);
+			}
 		}
 	}
+	
+	
 
-	private void parsePurchasedItemFromInputFile() 
+	public void parsePurchasedItemFromInputFile() 
 			throws UnreadableInputFileException {
 		//Avoid parsing the same input file more than once.
 		if(this.purchasedItems.size() != 0)
@@ -54,6 +60,21 @@ public class ShoppingBasketAnalyzer
 		} catch (IOException | UnexpectedInputDataFormatException e) {
 			e.printStackTrace();
 			throw new UnreadableInputFileException();
+		}
+	}
+	
+	public void printPurchasedItemFromInputFile() {
+		try
+		{
+			this.parsePurchasedItemFromInputFile();
+		} catch (UnreadableInputFileException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(PurchasedItem pi : this.purchasedItems) {
+			System.out.println(pi);
 		}
 	}
 	

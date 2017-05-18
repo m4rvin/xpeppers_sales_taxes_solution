@@ -4,6 +4,7 @@ import me.danieleangelucci.commons.AppConfig;
 import me.danieleangelucci.shopping.ShoppingBasketAnalyzer;
 import me.danieleangelucci.shopping.Store;
 import me.danieleangelucci.shopping.UnloadableStoreException;
+import me.danieleangelucci.shopping.UnreadableInputFileException;
 
 public class Main
 {
@@ -30,6 +31,15 @@ public class Main
 		}
 		
 		ShoppingBasketAnalyzer sbAnalyzer = new ShoppingBasketAnalyzer();
+		try
+		{
+			sbAnalyzer.parsePurchasedItemFromInputFile();
+		} catch (UnreadableInputFileException e)
+		{
+			e.printStackTrace();
+			System.exit(1);
+		}
+		sbAnalyzer.computeFinalPriceOfPurchasedItem();
 		sbAnalyzer.printPurchasedItemFromInputFile();
 		//TODO
 
