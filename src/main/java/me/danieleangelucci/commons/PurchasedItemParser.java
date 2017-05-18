@@ -24,14 +24,14 @@ public class PurchasedItemParser
 		
 		//Check and remove "imported" keyword
 		String inputLine = shoppingBasketLine;
-		String tmpLine = removeSubstring(inputLine, "imported");
+		String tmpLine = removeSubstring(inputLine, " imported ");
 		if (tmpLine.length() != inputLine.length()) {
 			importedItem = true;
 			inputLine = tmpLine;
 		}
 		
 		//Check and remove "at" keyword
-		tmpLine = removeSubstring(inputLine, "at");
+		tmpLine = removeSubstring(inputLine, " at ");
 		if (tmpLine.length() == inputLine.length())
 			throw new UnexpectedInputDataFormatException();
 		inputLine = tmpLine;
@@ -61,17 +61,16 @@ public class PurchasedItemParser
 	}
 	
 	/**
-	 * Remove "substring" from "from" and replace any double spaces "  " with a
-	 * single space " ", keeping the input string format.
+	 * Remove "substring" from "from" and keeping the monospaced input string
+	 * format.
 	 * @param from
 	 * @param substring
 	 * @return The same input string if "substring" is not found. The new string
 	 * otherwise.
 	 */
 	private static String removeSubstring(String from, String substring) {
-		String firstReplace = from.replaceFirst(substring, "");
-		String secondReplace = firstReplace.replaceFirst("  ", " ");
-		return secondReplace;
+		String firstReplace = from.replaceFirst(substring, " ");
+		return firstReplace;
 	}
 	
 	private static ItemCategory matchCategory(String itemName) {

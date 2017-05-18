@@ -31,7 +31,7 @@ public class PurchasedItemTest
 	}
 	
 	@Test
-	public void testPurchasedItemParsing()
+	public void testNonImportedKnownCategoryPurchasedItemParsing()
 	{
 		String testInput = "1 book at 12.49";
 		PurchasedItem parsedPItem = null;
@@ -44,16 +44,31 @@ public class PurchasedItemTest
 			fail();
 		}
 		
-		PurchasedItem pItem = mock(PurchasedItem.class);
-		when(pItem.getQuantity()).thenReturn(1);
-		when(pItem.getCategory()).thenReturn(ItemCategory.BOOKS);
-		when(pItem.getSellingPrice()).thenReturn(12.49);
 		
-		assertEquals(parsedPItem.getQuantity(), pItem.getQuantity());
-		assertEquals(parsedPItem.getCategory(), pItem.getCategory());
-		assertEquals(parsedPItem.getSellingPrice(), pItem.getSellingPrice(), 0);
-
-
+		assertEquals(parsedPItem.getQuantity(), 1);
+		assertEquals(parsedPItem.getCategory(), ItemCategory.BOOKS);
+		assertEquals(parsedPItem.getSellingPrice(), 12.49, 0);
 	}
+	
+	@Test
+	public void testImportedKnownCategoryPurchasedItemParsing()
+	{
+		String testInput = "1 box of imported chocolates at 11.25";
+		PurchasedItem parsedPItem = null;
+		try
+		{
+			parsedPItem = PurchasedItemParser.parseLine(testInput);
+		} catch (UnexpectedInputDataFormatException e)
+		{
+			e.printStackTrace();
+			fail();
+		}
+		
+		assertEquals(parsedPItem.getQuantity(), 1);
+		assertEquals(parsedPItem.getCategory(), ItemCategory.FOOD);
+		assertEquals(parsedPItem.getSellingPrice(), 11.25, 0);
+		assertTrue(parsedPItem.isImported());
+	}
+	
 
 }
