@@ -41,10 +41,8 @@ public class ShoppingBasketAnalyzer
 		}
 	}
 	
-	
 	private double roundSalesTax(double salesTax) {
-		//TODO
-		return salesTax;
+		return salesTax = Math.ceil(salesTax / 0.05) *0.05;
 	}
 	
 	public void formatReceipt() {
@@ -73,8 +71,6 @@ public class ShoppingBasketAnalyzer
 		System.out.println("Total: " 
 				+ new DecimalFormat("0.00").format(totalPrice));
 	}
-	
-	
 
 	public void parsePurchasedItemFromInputFile() 
 			throws UnreadableInputFileException {
