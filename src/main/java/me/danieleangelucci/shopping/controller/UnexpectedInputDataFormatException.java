@@ -1,4 +1,4 @@
-package me.danieleangelucci.commons;
+package me.danieleangelucci.shopping.controller;
 
 public class UnexpectedInputDataFormatException extends Exception
 {

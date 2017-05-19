@@ -1,11 +1,9 @@
-package me.danieleangelucci.shopping;
+package me.danieleangelucci.shopping.model;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +15,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import me.danieleangelucci.commons.AppConfig;
+import me.danieleangelucci.shopping.ItemCategory;
 
 public class Store
 {

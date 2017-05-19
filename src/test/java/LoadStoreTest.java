@@ -4,8 +4,8 @@ import java.util.Set;
 
 import me.danieleangelucci.commons.AppConfig;
 import me.danieleangelucci.shopping.ItemCategory;
-import me.danieleangelucci.shopping.Store;
-import me.danieleangelucci.shopping.UnloadableStoreException;
+import me.danieleangelucci.shopping.model.Store;
+import me.danieleangelucci.shopping.model.UnloadableStoreException;
 
 import org.junit.Before;
 import org.junit.Test;

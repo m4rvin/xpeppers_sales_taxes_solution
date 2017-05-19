@@ -1,10 +1,16 @@
 package me.danieleangelucci.main;
 
+import java.util.List;
+
 import me.danieleangelucci.commons.AppConfig;
-import me.danieleangelucci.shopping.ShoppingBasketAnalyzer;
-import me.danieleangelucci.shopping.Store;
-import me.danieleangelucci.shopping.UnloadableStoreException;
-import me.danieleangelucci.shopping.UnreadableInputFileException;
+import me.danieleangelucci.shopping.controller.ShoppingBasketHandler;
+import me.danieleangelucci.shopping.controller.StoreHandler;
+import me.danieleangelucci.shopping.model.EmptyShoppingBasketException;
+import me.danieleangelucci.shopping.model.PurchasedItem;
+import me.danieleangelucci.shopping.model.ShoppingBasketAnalyzer;
+import me.danieleangelucci.shopping.model.UnloadableStoreException;
+import me.danieleangelucci.shopping.model.UnreadableInputFileException;
+import me.danieleangelucci.shopping.view.ShoppingBasketViewer;
 
 public class Main
 {
@@ -21,9 +27,10 @@ public class Main
 		System.out.println("Loading categories file: " + AppConfig.categoriesFilePath);
 		System.out.println("Using input file: " + AppConfig.inputFilePath);
 		
+		StoreHandler storeHandler = new StoreHandler();
 		try
 		{
-			Store store = Store.getStore();
+			storeHandler.initializeStore();
 		} catch (UnloadableStoreException e)
 		{
 			e.printStackTrace();
@@ -31,20 +38,32 @@ public class Main
 		}
 		
 		ShoppingBasketAnalyzer sbAnalyzer = new ShoppingBasketAnalyzer();
+		ShoppingBasketViewer sbViewer = new ShoppingBasketViewer();
+		ShoppingBasketHandler sbHandler = new ShoppingBasketHandler(sbAnalyzer, sbViewer);
 		try
 		{
-			sbAnalyzer.parsePurchasedItemFromInputFile();
+			sbHandler.parsePurchasedItemFromInputFile();
 		} catch (UnreadableInputFileException e)
 		{
 			e.printStackTrace();
 			System.exit(1);
 		}
-		sbAnalyzer.computeFinalPriceOfPurchasedItem();
-		sbAnalyzer.printPurchasedItemFromInputFile();
-		//TODO
-		sbAnalyzer.formatReceipt();
-
+		sbHandler.computeFinalPriceOnShoppingBasketItems();
 		
+		//sbAnalyzer.printPurchasedItemFromInputFile();
+		//TODO
+		
+		List<PurchasedItem> itemList = null;
+		try
+		{
+			itemList = sbHandler.getShoppingBasketItems();
+		} catch (EmptyShoppingBasketException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(1);
+		}
+		sbHandler.showReceipt(itemList);
 	}
 	
 	

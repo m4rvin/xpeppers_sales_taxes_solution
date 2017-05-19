@@ -1,11 +1,10 @@
 import static org.junit.Assert.*;
 import me.danieleangelucci.commons.AppConfig;
-import me.danieleangelucci.commons.PurchasedItemParser;
-import me.danieleangelucci.commons.UnexpectedInputDataFormatException;
 import me.danieleangelucci.shopping.ItemCategory;
-import me.danieleangelucci.shopping.PurchasedItem;
-import me.danieleangelucci.shopping.Store;
-import me.danieleangelucci.shopping.UnloadableStoreException;
+import me.danieleangelucci.shopping.controller.UnexpectedInputDataFormatException;
+import me.danieleangelucci.shopping.model.PurchasedItem;
+import me.danieleangelucci.shopping.model.Store;
+import me.danieleangelucci.shopping.model.UnloadableStoreException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +36,7 @@ public class PurchasedItemTest
 		PurchasedItem parsedPItem = null;
 		try
 		{
-			parsedPItem = PurchasedItemParser.parseLine(testInput);
+			parsedPItem = PurchasedItem.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
 			e.printStackTrace();
@@ -56,7 +55,7 @@ public class PurchasedItemTest
 		PurchasedItem parsedPItem = null;
 		try
 		{
-			parsedPItem = PurchasedItemParser.parseLine(testInput);
+			parsedPItem = PurchasedItem.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
 			e.printStackTrace();
@@ -77,7 +76,7 @@ public class PurchasedItemTest
 		PurchasedItem parsedPItem = null;
 		try
 		{
-			parsedPItem = PurchasedItemParser.parseLine(testInput);
+			parsedPItem = PurchasedItem.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
 			e.printStackTrace();
@@ -98,7 +97,7 @@ public class PurchasedItemTest
 		PurchasedItem parsedPItem = null;
 		try
 		{
-			parsedPItem = PurchasedItemParser.parseLine(testInput);
+			parsedPItem = PurchasedItem.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
 			e.printStackTrace();
@@ -119,7 +118,7 @@ public class PurchasedItemTest
 		PurchasedItem parsedPItem = null;
 		try
 		{
-			parsedPItem = PurchasedItemParser.parseLine(testInput);
+			parsedPItem = PurchasedItem.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
 			e.printStackTrace();
