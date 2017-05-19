@@ -42,6 +42,7 @@ public class Main
 		sbAnalyzer.computeFinalPriceOfPurchasedItem();
 		sbAnalyzer.printPurchasedItemFromInputFile();
 		//TODO
+		sbAnalyzer.formatReceipt();
 
 		
 	}

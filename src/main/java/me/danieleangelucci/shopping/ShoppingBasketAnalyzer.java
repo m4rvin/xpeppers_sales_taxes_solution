@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +28,50 @@ public class ShoppingBasketAnalyzer
 			if(pi.getCategory().equals(ItemCategory.OTHERS))
 			{
 				double salesTax = pi.getSellingPrice() * 10/100;
+				salesTax = roundSalesTax(salesTax);
 				pi.setFinalPrice(pi.getFinalPrice() + salesTax);
 			}
 			//Apply 5% sales tax: Import duty 
 			if(pi.isImported())
 			{
 				double salesTax = pi.getSellingPrice() * 5/100;
+				salesTax = roundSalesTax(salesTax);
 				pi.setFinalPrice(pi.getFinalPrice() + salesTax);
 			}
 		}
+	}
+	
+	
+	private double roundSalesTax(double salesTax) {
+		//TODO
+		return salesTax;
+	}
+	
+	public void formatReceipt() {
+		List<String> itemList = new ArrayList<String>();
+		double totalSalestaxes = 0.0;
+		double totalPrice = 0.0;
+		
+		for (PurchasedItem pi : this.purchasedItems) {
+			String output = Integer.toString(pi.getQuantity()).concat(" ");
+			if(pi.isImported())
+				output = output.concat("imported ");
+			output = output.concat(pi.getName()).concat(": ");
+			output = output.concat(String.valueOf(
+					new DecimalFormat("0.00").format(pi.getFinalPrice())));
+			itemList.add(output);
+			
+			totalSalestaxes += pi.getFinalPrice() - pi.getSellingPrice();
+			totalPrice += pi.getFinalPrice();
+		}
+		
+		for(String item : itemList) {
+			System.out.println(item);
+		}
+		System.out.println("Sales Taxes: " 
+				+ new DecimalFormat("0.00").format(totalSalestaxes));
+		System.out.println("Total: " 
+				+ new DecimalFormat("0.00").format(totalPrice));
 	}
 	
 	
