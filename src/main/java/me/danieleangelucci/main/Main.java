@@ -17,16 +17,9 @@ public class Main
 
 	public static void main(String[] args)
 	{
-		
-		checkCommandlineArgs(args);
-		
-		AppConfig.categoriesFilePath = args[0];
-		AppConfig.inputFilePath = args[1];
-
 		System.out.println("Welcome to \"Sales taxes problem\"!");
-		System.out.println("Loading categories file: " + AppConfig.categoriesFilePath);
-		System.out.println("Using input file: " + AppConfig.inputFilePath);
-		
+		readConfiguration(args);
+
 		StoreHandler storeHandler = new StoreHandler();
 		try
 		{
@@ -50,22 +43,26 @@ public class Main
 		}
 		sbHandler.computeFinalPriceOnShoppingBasketItems();
 		
-		//sbAnalyzer.printPurchasedItemFromInputFile();
-		//TODO
-		
 		List<PurchasedItem> itemList = null;
 		try
 		{
 			itemList = sbHandler.getShoppingBasketItems();
 		} catch (EmptyShoppingBasketException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(1);
 		}
 		sbHandler.showReceipt(itemList);
 	}
 	
+	private static void readConfiguration(String[] args) {
+		checkCommandlineArgs(args);
+		AppConfig.categoriesFilePath = args[0];
+		AppConfig.inputFilePath = args[1];
+		
+		System.out.println("Loading categories file: " + AppConfig.categoriesFilePath);
+		System.out.println("Using input file: " + AppConfig.inputFilePath);
+	}
 	
 	private static void checkCommandlineArgs(String[] args) {
 		
