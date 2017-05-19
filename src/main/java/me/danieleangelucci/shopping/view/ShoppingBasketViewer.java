@@ -34,19 +34,4 @@ public class ShoppingBasketViewer
 		System.out.println("Total: " 
 				+ new DecimalFormat("0.00").format(totalPrice));
 	}
-	
-/*	public void printPurchasedItemFromInputFile(ShoppingBasketAnalyzer sbAnalyzer, List<PurchasedItem> purchasedItems) {
-		try
-		{
-			sbAnalyzer.parsePurchasedItemFromInputFile();
-		} catch (UnreadableInputFileException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		for(PurchasedItem pi : purchasedItems) {
-			System.out.println(pi);
-		}
-	}*/
 }

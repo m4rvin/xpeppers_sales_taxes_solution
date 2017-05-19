@@ -11,7 +11,7 @@ import java.util.List;
 import me.danieleangelucci.commons.AppConfig;
 import me.danieleangelucci.shopping.model.EmptyShoppingBasketException;
 import me.danieleangelucci.shopping.model.PurchasedItem;
-import me.danieleangelucci.shopping.model.ShoppingBasketAnalyzer;
+import me.danieleangelucci.shopping.model.ShoppingBasket;
 import me.danieleangelucci.shopping.model.UnreadableInputFileException;
 import me.danieleangelucci.shopping.view.ShoppingBasketViewer;
 
@@ -19,18 +19,18 @@ public class ShoppingBasketHandler
 {
 
 	public ShoppingBasketHandler(
-			ShoppingBasketAnalyzer sbAnalyzer,
+			ShoppingBasket shoppingBasket,
 			ShoppingBasketViewer sbViewer) {
-		this.sbAnalyzer = sbAnalyzer;
+		this.shoppingBasket = shoppingBasket;
 		this.sbViewer = sbViewer;
 	}
 	
 	public void computeFinalPriceOnShoppingBasketItems() {
-		this.sbAnalyzer.computeFinalPrice();
+		this.shoppingBasket.computeFinalPrice();
 	}
 	
 	public List<PurchasedItem> getShoppingBasketItems() throws EmptyShoppingBasketException {
-		return this.sbAnalyzer.getShoppingBasketItems();
+		return this.shoppingBasket.getShoppingBasketItems();
 	} 
 	
 	public void parsePurchasedItemFromInputFile() 
@@ -48,7 +48,7 @@ public class ShoppingBasketHandler
 		    String line = null;
 		    while ((line = reader.readLine()) != null) {
 		        PurchasedItem pItem = PurchasedItem.parseLine(line);
-		        sbAnalyzer.put(pItem);
+		        shoppingBasket.put(pItem);
 		    }
 		} catch (IOException | UnexpectedInputDataFormatException e) {
 			e.printStackTrace();
@@ -61,6 +61,6 @@ public class ShoppingBasketHandler
 	}
 
 	
-	private ShoppingBasketAnalyzer sbAnalyzer;
+	private ShoppingBasket shoppingBasket;
 	private ShoppingBasketViewer sbViewer;
 }

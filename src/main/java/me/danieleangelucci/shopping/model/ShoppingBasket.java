@@ -5,9 +5,9 @@ import java.util.List;
 
 import me.danieleangelucci.shopping.ItemCategory;
 
-public class ShoppingBasketAnalyzer
+public class ShoppingBasket
 {
-	public ShoppingBasketAnalyzer() {
+	public ShoppingBasket() {
 		this.purchasedItems = new ArrayList<PurchasedItem>();
 	}
 	
