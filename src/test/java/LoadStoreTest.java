@@ -4,7 +4,7 @@ import java.util.Set;
 
 import me.danieleangelucci.commons.AppConfig;
 import me.danieleangelucci.shopping.ItemCategory;
-import me.danieleangelucci.shopping.model.Store;
+import me.danieleangelucci.shopping.controller.StoreHandler;
 import me.danieleangelucci.shopping.model.UnloadableStoreException;
 
 import org.junit.Before;
@@ -13,14 +13,14 @@ import org.junit.Test;
 
 public class LoadStoreTest
 {
-	public Store store = null;
+	public StoreHandler sHandler = new StoreHandler();
 	
 	@Before
 	public void initialize(){
 		AppConfig.categoriesFilePath = "categories.json";
 		try
 		{
-			store = Store.getStore();
+			sHandler.initializeStore();
 		} catch (UnloadableStoreException e)
 		{
 			// TODO Auto-generated catch block
@@ -31,7 +31,15 @@ public class LoadStoreTest
 	@Test
 	public void loadBookCategoryTest()
 	{
-		Set<String> bookItems = store.getItems(ItemCategory.BOOKS);
+		Set<String> bookItems = null;
+		try
+		{
+			bookItems = sHandler.getItems(ItemCategory.BOOKS);
+		} catch (UnloadableStoreException e)
+		{
+			e.printStackTrace();
+			fail();
+		}
 		assertEquals(bookItems.size(), 1);
 		assertTrue(bookItems.contains("book"));
 	}
@@ -39,7 +47,15 @@ public class LoadStoreTest
 	@Test
 	public void loadFoodCategoryTest()
 	{
-		Set<String> foodItems = store.getItems(ItemCategory.FOOD);
+		Set<String> foodItems = null;
+		try
+		{
+			foodItems = sHandler.getItems(ItemCategory.FOOD);
+		} catch (UnloadableStoreException e)
+		{
+			e.printStackTrace();
+			fail();
+		}
 		assertEquals(foodItems.size(), 2);
 		assertTrue(foodItems.contains("chocolate bar"));
 		assertTrue(foodItems.contains("box of chocolates"));
@@ -48,7 +64,15 @@ public class LoadStoreTest
 	@Test
 	public void loadMedicalProductsCategoryTest()
 	{
-		Set<String> foodItems = store.getItems(ItemCategory.MEDICAL_PRODUCTS);
+		Set<String> foodItems = null;
+		try
+		{
+			foodItems = sHandler.getItems(ItemCategory.MEDICAL_PRODUCTS);
+		} catch (UnloadableStoreException e)
+		{
+			e.printStackTrace();
+			fail();
+		}
 		assertEquals(foodItems.size(), 1);
 		assertTrue(foodItems.contains("packet of headache pills"));
 	}

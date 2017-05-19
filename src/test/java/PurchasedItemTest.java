@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 import me.danieleangelucci.commons.AppConfig;
 import me.danieleangelucci.shopping.ItemCategory;
+import me.danieleangelucci.shopping.controller.StoreHandler;
 import me.danieleangelucci.shopping.controller.UnexpectedInputDataFormatException;
 import me.danieleangelucci.shopping.model.PurchasedItem;
 import me.danieleangelucci.shopping.model.Store;
@@ -15,15 +16,16 @@ import static org.mockito.Mockito.*;
 
 public class PurchasedItemTest
 {
+	public StoreHandler sHandler = new StoreHandler();
+
 	@Before
 	public void initialize(){
+		AppConfig.categoriesFilePath = "categories.json";
 		try
 		{
-			AppConfig.categoriesFilePath = "categories.json";
-			Store store = Store.getStore();
+			sHandler.initializeStore();
 		} catch (UnloadableStoreException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail();
 		}

@@ -38,7 +38,6 @@ public class Store
 	}
 	
 	
-	
 	private static Store store = null;
 	
 	private Map<ItemCategory, Set<String>> categories;
@@ -47,18 +46,13 @@ public class Store
 		this.categories = new HashMap<ItemCategory, Set<String>>();
 	}
 	
-	private static void loadStore() 
-			throws FileNotFoundException, MalformedStoreFileException{
+	private static void loadStore() throws FileNotFoundException, MalformedStoreFileException{
 		store = new Store();
 		try {
 			Object root = loadStructuredFile();
 			loadCategory("books", ItemCategory.BOOKS, store, root);
 			loadCategory("food", ItemCategory.FOOD, store, root);
-			loadCategory(
-					"medical products", 
-					ItemCategory.MEDICAL_PRODUCTS, 
-					store,
-					root);
+			loadCategory("medical products", ItemCategory.MEDICAL_PRODUCTS, store, root);
 		}
 		catch(JsonIOException e) {
 			e.printStackTrace();
@@ -66,14 +60,10 @@ public class Store
 		}
 	}
 	
-	private static Object loadStructuredFile() 
-			throws JsonSyntaxException, 
-				   FileNotFoundException, 
-				   MalformedStoreFileException{
+	private static Object loadStructuredFile() throws JsonSyntaxException, FileNotFoundException, MalformedStoreFileException{
 		JsonParser parser = new JsonParser();
 		try {
-			JsonElement jsontree = parser.parse(
-				new FileReader(AppConfig.categoriesFilePath));
+			JsonElement jsontree = parser.parse(new FileReader(AppConfig.categoriesFilePath));
 			JsonObject jo = jsontree.getAsJsonObject();
 			return jo;
 		}
@@ -83,11 +73,7 @@ public class Store
 		}
 	}
 	
-	private static void loadCategory(
-			String categoryNameInFile, 
-			ItemCategory categoryId, 
-			Store store, 
-			Object root){
+	private static void loadCategory(String categoryNameInFile, ItemCategory categoryId, Store store, Object root){
 		JsonObject jo = (JsonObject)root;
 		JsonArray catJson = jo.getAsJsonArray(categoryNameInFile);
 
