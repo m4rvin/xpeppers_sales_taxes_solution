@@ -17,18 +17,10 @@ public class ShoppingBasket implements ShoppingBasketInterface
 
 			//Apply 10% sales tax: Basic sales tax
 			if(pi.getCategory().equals(ItemCategory.OTHERS))
-			{
-				double salesTax = pi.getSellingPrice() * 10/100;
-				salesTax = roundSalesTax(salesTax);
-				pi.setFinalPrice(pi.getFinalPrice() + salesTax);
-			}
+				applyTax(pi, ShoppingBasket.BASIC_SALES_TAX_RATE);
 			//Apply 5% sales tax: Import duty 
 			if(pi.isImported())
-			{
-				double salesTax = pi.getSellingPrice() * 5/100;
-				salesTax = roundSalesTax(salesTax);
-				pi.setFinalPrice(pi.getFinalPrice() + salesTax);
-			}
+				applyTax(pi, ShoppingBasket.IMPORT_DUTY_RATE);
 		}
 	}
 	
@@ -40,9 +32,22 @@ public class ShoppingBasket implements ShoppingBasketInterface
 		this.purchasedItems.add((PurchasedItem)pItem);
 	}
 	
+	
+	private void applyTax(PurchasedItem pi, double tax_rate) {
+		double salesTax = pi.getSellingPrice() * tax_rate;
+		salesTax = roundSalesTax(salesTax);
+		pi.setFinalPrice(pi.getFinalPrice() + salesTax);
+	}
+	
 	private double roundSalesTax(double salesTax) {
-		return salesTax = Math.ceil(salesTax / 0.05) *0.05;
+		return salesTax = Math.ceil(salesTax / ShoppingBasket.TAX_ROUNDING_VALUE) * ShoppingBasket.TAX_ROUNDING_VALUE;
 	}
 	
 	private List<PurchasedItem> purchasedItems;
+	
+	private static final double BASIC_SALES_TAX_RATE = 10.0/100.0;
+	private static final double IMPORT_DUTY_RATE = 5.0/100.0;
+	private static final double TAX_ROUNDING_VALUE= 0.05;
+
+
 }
