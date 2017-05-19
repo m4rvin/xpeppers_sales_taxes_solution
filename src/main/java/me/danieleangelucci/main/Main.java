@@ -17,7 +17,7 @@ public class Main
 
 	public static void main(String[] args)
 	{
-		System.out.println("Welcome to \"Sales taxes problem\"!");
+		System.out.println("\nWelcome to \"Sales taxes problem\"!\n");
 		readConfiguration(args);
 
 		StoreHandler storeHandler = new StoreHandler();
@@ -52,6 +52,8 @@ public class Main
 			e.printStackTrace();
 			System.exit(1);
 		}
+		
+		System.out.println("\nRECEIPT:\n");
 		sbHandler.showReceipt(itemList);
 	}
 	
@@ -61,7 +63,7 @@ public class Main
 		AppConfig.inputFilePath = args[1];
 		
 		System.out.println("Loading categories file: " + AppConfig.categoriesFilePath);
-		System.out.println("Using input file: " + AppConfig.inputFilePath);
+		System.out.println("Using input file: " + AppConfig.inputFilePath + "\n");
 	}
 	
 	private static void checkCommandlineArgs(String[] args) {
