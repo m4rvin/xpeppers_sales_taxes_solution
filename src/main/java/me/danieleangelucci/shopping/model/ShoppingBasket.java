@@ -5,7 +5,7 @@ import java.util.List;
 
 import me.danieleangelucci.shopping.ItemCategory;
 
-public class ShoppingBasket
+public class ShoppingBasket implements ShoppingBasketInterface
 {
 	public ShoppingBasket() {
 		this.purchasedItems = new ArrayList<PurchasedItem>();
@@ -32,12 +32,12 @@ public class ShoppingBasket
 		}
 	}
 	
-	public List<PurchasedItem> getShoppingBasketItems() throws EmptyShoppingBasketException {
+	public List<? extends Item> getShoppingBasketItems() throws EmptyShoppingBasketException {
 		return this.purchasedItems;
 	}
 	
-	public void put(PurchasedItem pItem) {
-		this.purchasedItems.add(pItem);
+	public void put(Item pItem) {
+		this.purchasedItems.add((PurchasedItem)pItem);
 	}
 	
 	private double roundSalesTax(double salesTax) {

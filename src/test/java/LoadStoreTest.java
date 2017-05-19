@@ -23,7 +23,6 @@ public class LoadStoreTest
 			sHandler.initializeStore();
 		} catch (UnloadableStoreException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail();
 		}

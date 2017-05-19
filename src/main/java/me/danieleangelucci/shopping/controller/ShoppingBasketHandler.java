@@ -10,6 +10,7 @@ import java.util.List;
 
 import me.danieleangelucci.commons.AppConfig;
 import me.danieleangelucci.shopping.model.EmptyShoppingBasketException;
+import me.danieleangelucci.shopping.model.Item;
 import me.danieleangelucci.shopping.model.PurchasedItem;
 import me.danieleangelucci.shopping.model.ShoppingBasket;
 import me.danieleangelucci.shopping.model.UnreadableInputFileException;
@@ -29,7 +30,7 @@ public class ShoppingBasketHandler
 		this.shoppingBasket.computeFinalPrice();
 	}
 	
-	public List<PurchasedItem> getShoppingBasketItems() throws EmptyShoppingBasketException {
+	public List<? extends Item> getShoppingBasketItems() throws EmptyShoppingBasketException {
 		return this.shoppingBasket.getShoppingBasketItems();
 	} 
 	
@@ -56,7 +57,7 @@ public class ShoppingBasketHandler
 		}
 	}
 	
-	public void showReceipt(List<PurchasedItem> purchasedItems) {
+	public void showReceipt(List<? extends Item> purchasedItems) {
 		this.sbViewer.formatReceipt(purchasedItems);
 	}
 

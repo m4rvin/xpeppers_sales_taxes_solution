@@ -4,16 +4,17 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.danieleangelucci.shopping.model.Item;
 import me.danieleangelucci.shopping.model.PurchasedItem;
 
 public class ShoppingBasketViewer
 {
-	public void formatReceipt(List<PurchasedItem> purchasedItems) {
+	public void formatReceipt(List<? extends Item> purchasedItems) {
 		List<String> itemList = new ArrayList<String>();
 		double totalSalestaxes = 0.0;
 		double totalPrice = 0.0;
 		
-		for (PurchasedItem pi : purchasedItems) {
+		for (PurchasedItem pi : (List<PurchasedItem>)purchasedItems) {
 			String output = Integer.toString(pi.getQuantity()).concat(" ");
 			if(pi.isImported())
 				output = output.concat("imported ");

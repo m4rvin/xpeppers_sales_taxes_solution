@@ -6,7 +6,7 @@ import me.danieleangelucci.commons.AppConfig;
 import me.danieleangelucci.shopping.controller.ShoppingBasketHandler;
 import me.danieleangelucci.shopping.controller.StoreHandler;
 import me.danieleangelucci.shopping.model.EmptyShoppingBasketException;
-import me.danieleangelucci.shopping.model.PurchasedItem;
+import me.danieleangelucci.shopping.model.Item;
 import me.danieleangelucci.shopping.model.ShoppingBasket;
 import me.danieleangelucci.shopping.model.UnloadableStoreException;
 import me.danieleangelucci.shopping.model.UnreadableInputFileException;
@@ -43,7 +43,7 @@ public class Main
 		}
 		sbHandler.computeFinalPriceOnShoppingBasketItems();
 		
-		List<PurchasedItem> itemList = null;
+		List<? extends Item> itemList = null;
 		try
 		{
 			itemList = sbHandler.getShoppingBasketItems();
