@@ -7,7 +7,7 @@ import java.util.List;
 import me.danieleangelucci.shopping.model.Item;
 import me.danieleangelucci.shopping.model.PurchasedItem;
 
-public class ShoppingBasketViewer
+public class ShoppingBasketViewer implements ShoppingBasketViewerInterface
 {
 	public void formatReceipt(List<? extends Item> purchasedItems) {
 		List<String> itemList = new ArrayList<String>();
@@ -20,7 +20,7 @@ public class ShoppingBasketViewer
 				output = output.concat("imported ");
 			output = output.concat(pi.getName()).concat(": ");
 			output = output.concat(String.valueOf(
-					new DecimalFormat("0.00").format(pi.getFinalPrice())));
+					DECIMAL_FORMAT.format(pi.getFinalPrice())));
 			itemList.add(output);
 			
 			totalSalestaxes += pi.getFinalPrice() - pi.getSellingPrice();
@@ -31,8 +31,10 @@ public class ShoppingBasketViewer
 			System.out.println(item);
 		}
 		System.out.println("Sales Taxes: " 
-				+ new DecimalFormat("0.00").format(totalSalestaxes));
+				+ DECIMAL_FORMAT.format(totalSalestaxes));
 		System.out.println("Total: " 
-				+ new DecimalFormat("0.00").format(totalPrice));
+				+ DECIMAL_FORMAT.format(totalPrice));
 	}
+	
+	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00");
 }

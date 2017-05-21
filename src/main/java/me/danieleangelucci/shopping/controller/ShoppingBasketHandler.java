@@ -14,14 +14,14 @@ import me.danieleangelucci.shopping.model.Item;
 import me.danieleangelucci.shopping.model.PurchasedItem;
 import me.danieleangelucci.shopping.model.ShoppingBasketInterface;
 import me.danieleangelucci.shopping.model.UnreadableInputFileException;
-import me.danieleangelucci.shopping.view.ShoppingBasketViewer;
+import me.danieleangelucci.shopping.view.ShoppingBasketViewerInterface;
 
 public class ShoppingBasketHandler
 {
 
 	public ShoppingBasketHandler(
 			ShoppingBasketInterface shoppingBasket,
-			ShoppingBasketViewer sbViewer) {
+			ShoppingBasketViewerInterface sbViewer) {
 		this.shoppingBasket = shoppingBasket;
 		this.sbViewer = sbViewer;
 	}
@@ -63,5 +63,5 @@ public class ShoppingBasketHandler
 
 	
 	private ShoppingBasketInterface shoppingBasket;
-	private ShoppingBasketViewer sbViewer;
+	private ShoppingBasketViewerInterface sbViewer;
 }
