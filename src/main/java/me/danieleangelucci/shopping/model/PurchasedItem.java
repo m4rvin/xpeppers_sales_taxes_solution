@@ -82,7 +82,7 @@ public class PurchasedItem extends Item
 	 * PurchasedItem object. It works removing the keywords and placeholder
 	 * once a time, starting from "imported", then removing the unuseful "at",
 	 * then the quantity of items and their price. The final step only contains
-	 * the item name, useful to match the category against which apply the 
+	 * the item name, useful to match the category against which to apply the 
 	 * taxes.
 	 * @param shoppingBasketEntry The input line of an item.
 	 * @return The PurchasedItem object representing the input line.
@@ -145,12 +145,19 @@ public class PurchasedItem extends Item
 		return firstReplace;
 	}
 	
+	/**
+	 * Compare the item name against the item names in the store's categories 
+	 * and find the one matching.
+	 * @param itemName
+	 * @return The category matching the item.
+	 */
 	private static ItemCategory matchCategory(String itemName) {
 		try
 		{
 			Store store = Store.getStore();
 			for (ItemCategory ic : ItemCategory.values()) {
-				//The OTHERS category has no elements. Do not analyze it.
+				//The OTHERS category has no elements. 
+				//Cannot analyze its items.
 				if(ic.equals(ItemCategory.OTHERS))
 					continue;
 				if(store.getItems(ic).contains(itemName))
