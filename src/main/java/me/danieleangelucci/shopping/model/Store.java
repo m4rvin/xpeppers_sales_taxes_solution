@@ -19,6 +19,11 @@ import me.danieleangelucci.shopping.ItemCategory;
 
 public class Store
 {
+	/**
+	 * Singleton method to load the store with its categories and items.
+	 * @return The instance of store.
+	 * @throws UnloadableStoreException
+	 */
 	public static Store getStore() throws UnloadableStoreException {
 		if(store == null) {
 			try
@@ -33,6 +38,11 @@ public class Store
 		return store;
 	}
 	
+	/**
+	 * Retrieve the items of a specific store category.
+	 * @param category The category from which to retrieve the items.
+	 * @return
+	 */
 	public Set<String> getItems(ItemCategory category) {
 		return categories.get(category);
 	}
@@ -46,6 +56,12 @@ public class Store
 		this.categories = new HashMap<ItemCategory, Set<String>>();
 	}
 	
+	/**
+	 * Load the store from a structured file, looking for categories and their
+	 * items.
+	 * @throws FileNotFoundException
+	 * @throws MalformedStoreFileException
+	 */
 	private static void loadStore() throws FileNotFoundException, MalformedStoreFileException{
 		store = new Store();
 		try {
@@ -60,6 +76,13 @@ public class Store
 		}
 	}
 	
+	/**
+	 * Read a structured file. The current implementation parse a JSON file.
+	 * @return The object representing the structured file to navigate.
+	 * @throws JsonSyntaxException
+	 * @throws FileNotFoundException
+	 * @throws MalformedStoreFileException
+	 */
 	private static Object loadStructuredFile() throws JsonSyntaxException, FileNotFoundException, MalformedStoreFileException{
 		JsonParser parser = new JsonParser();
 		try {
@@ -73,6 +96,14 @@ public class Store
 		}
 	}
 	
+	/**
+	 * Load the categories on the structured file into the store, within their 
+	 * items.
+	 * @param categoryNameInFile
+	 * @param categoryId
+	 * @param store
+	 * @param root
+	 */
 	private static void loadCategory(String categoryNameInFile, ItemCategory categoryId, Store store, Object root){
 		JsonObject jo = (JsonObject)root;
 		JsonArray catJson = jo.getAsJsonArray(categoryNameInFile);
