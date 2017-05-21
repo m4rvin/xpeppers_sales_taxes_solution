@@ -12,7 +12,7 @@ import me.danieleangelucci.commons.AppConfig;
 import me.danieleangelucci.shopping.model.EmptyShoppingBasketException;
 import me.danieleangelucci.shopping.model.Item;
 import me.danieleangelucci.shopping.model.PurchasedItem;
-import me.danieleangelucci.shopping.model.ShoppingBasket;
+import me.danieleangelucci.shopping.model.ShoppingBasketInterface;
 import me.danieleangelucci.shopping.model.UnreadableInputFileException;
 import me.danieleangelucci.shopping.view.ShoppingBasketViewer;
 
@@ -20,7 +20,7 @@ public class ShoppingBasketHandler
 {
 
 	public ShoppingBasketHandler(
-			ShoppingBasket shoppingBasket,
+			ShoppingBasketInterface shoppingBasket,
 			ShoppingBasketViewer sbViewer) {
 		this.shoppingBasket = shoppingBasket;
 		this.sbViewer = sbViewer;
@@ -62,6 +62,6 @@ public class ShoppingBasketHandler
 	}
 
 	
-	private ShoppingBasket shoppingBasket;
+	private ShoppingBasketInterface shoppingBasket;
 	private ShoppingBasketViewer sbViewer;
 }

@@ -30,9 +30,7 @@ public class Main
 			System.exit(1);
 		}
 		
-		ShoppingBasket shoppingBasket = new ShoppingBasket();
-		ShoppingBasketViewer sbViewer = new ShoppingBasketViewer();
-		ShoppingBasketHandler sbHandler = new ShoppingBasketHandler(shoppingBasket, sbViewer);
+		ShoppingBasketHandler sbHandler = new ShoppingBasketHandler(new ShoppingBasket(), new ShoppingBasketViewer());
 		try
 		{
 			sbHandler.parsePurchasedItemFromInputFile();
