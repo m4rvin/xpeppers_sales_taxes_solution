@@ -1,4 +1,4 @@
-package me.danieleangelucci.shopping;
+package me.danieleangelucci.shopping.model;
 
 public class MalformedStoreFileException extends Exception
 {

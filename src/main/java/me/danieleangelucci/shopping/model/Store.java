@@ -1,11 +1,9 @@
-package me.danieleangelucci.shopping;
+package me.danieleangelucci.shopping.model;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,9 +15,15 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import me.danieleangelucci.commons.AppConfig;
+import me.danieleangelucci.shopping.ItemCategory;
 
 public class Store
 {
+	/**
+	 * Singleton method to load the store with its categories and items.
+	 * @return The instance of store.
+	 * @throws UnloadableStoreException
+	 */
 	public static Store getStore() throws UnloadableStoreException {
 		if(store == null) {
 			try
@@ -34,10 +38,14 @@ public class Store
 		return store;
 	}
 	
+	/**
+	 * Retrieve the items of a specific store category.
+	 * @param category The category from which to retrieve the items.
+	 * @return
+	 */
 	public Set<String> getItems(ItemCategory category) {
 		return categories.get(category);
 	}
-	
 	
 	
 	private static Store store = null;
@@ -48,18 +56,19 @@ public class Store
 		this.categories = new HashMap<ItemCategory, Set<String>>();
 	}
 	
-	private static void loadStore() 
-			throws FileNotFoundException, MalformedStoreFileException{
+	/**
+	 * Load the store from a structured file, looking for categories and their
+	 * items.
+	 * @throws FileNotFoundException
+	 * @throws MalformedStoreFileException
+	 */
+	private static void loadStore() throws FileNotFoundException, MalformedStoreFileException{
 		store = new Store();
 		try {
 			Object root = loadStructuredFile();
 			loadCategory("books", ItemCategory.BOOKS, store, root);
 			loadCategory("food", ItemCategory.FOOD, store, root);
-			loadCategory(
-					"medical products", 
-					ItemCategory.MEDICAL_PRODUCTS, 
-					store,
-					root);
+			loadCategory("medical products", ItemCategory.MEDICAL_PRODUCTS, store, root);
 		}
 		catch(JsonIOException e) {
 			e.printStackTrace();
@@ -67,14 +76,17 @@ public class Store
 		}
 	}
 	
-	private static Object loadStructuredFile() 
-			throws JsonSyntaxException, 
-				   FileNotFoundException, 
-				   MalformedStoreFileException{
+	/**
+	 * Read a structured file. The current implementation parse a JSON file.
+	 * @return The object representing the structured file to navigate.
+	 * @throws JsonSyntaxException
+	 * @throws FileNotFoundException
+	 * @throws MalformedStoreFileException
+	 */
+	private static Object loadStructuredFile() throws JsonSyntaxException, FileNotFoundException, MalformedStoreFileException{
 		JsonParser parser = new JsonParser();
 		try {
-			JsonElement jsontree = parser.parse(
-				new FileReader(AppConfig.categoriesFilePath));
+			JsonElement jsontree = parser.parse(new FileReader(AppConfig.categoriesFilePath));
 			JsonObject jo = jsontree.getAsJsonObject();
 			return jo;
 		}
@@ -84,11 +96,15 @@ public class Store
 		}
 	}
 	
-	private static void loadCategory(
-			String categoryNameInFile, 
-			ItemCategory categoryId, 
-			Store store, 
-			Object root){
+	/**
+	 * Load the categories on the structured file into the store, within their 
+	 * items.
+	 * @param categoryNameInFile
+	 * @param categoryId
+	 * @param store
+	 * @param root
+	 */
+	private static void loadCategory(String categoryNameInFile, ItemCategory categoryId, Store store, Object root){
 		JsonObject jo = (JsonObject)root;
 		JsonArray catJson = jo.getAsJsonArray(categoryNameInFile);
 

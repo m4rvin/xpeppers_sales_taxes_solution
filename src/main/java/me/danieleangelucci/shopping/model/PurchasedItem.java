@@ -1,31 +1,99 @@
-package me.danieleangelucci.commons;
+package me.danieleangelucci.shopping.model;
 
 import java.text.DecimalFormat;
 
 import me.danieleangelucci.shopping.ItemCategory;
-import me.danieleangelucci.shopping.PurchasedItem;
-import me.danieleangelucci.shopping.Store;
-import me.danieleangelucci.shopping.UnloadableStoreException;
+import me.danieleangelucci.shopping.controller.UnexpectedInputDataFormatException;
 
-public class PurchasedItemParser
+public class PurchasedItem extends Item
 {
+	public PurchasedItem() {}
+	
+	public PurchasedItem(
+			String name, 
+			ItemCategory category, 
+			double sellingPrice,
+			int quantity,
+			boolean imported) {
+		super(name, category, sellingPrice);
+		this.quantity = quantity;
+		this.imported = imported;
+	}
+	
+	public PurchasedItem(
+			String name, 
+			ItemCategory category, 
+			double sellingPrice,
+			double finalPrice,
+			int quantity,
+			boolean imported) {
+		super(name, category, sellingPrice);
+		this.finalPrice = finalPrice;
+		this.quantity = quantity;
+		this.imported = imported;
+	}
+
+	public double getFinalPrice()
+	{
+		return finalPrice;
+	}
+	
+	public int getQuantity()
+	{
+		return quantity;
+	}
+
+	public boolean isImported()
+	{
+		return imported;
+	}
+
+	public void setFinalPrice(double finalPrice)
+	{
+		this.finalPrice = finalPrice;
+	}
+	
+	public void setImported(boolean imported)
+	{
+		this.imported = imported;
+	}
+	
+	public void setQuantity(int quantity)
+	{
+		this.quantity = quantity;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "PurchasedItem [finalPrice=" + String.valueOf(
+				new DecimalFormat("0.00").format(finalPrice)) + ", quantity="
+				+ quantity + ", imported=" + imported + ", name="
+				+ getName() + ", category=" + getCategory()
+				+ ", sellingPrice=" + 
+				String.valueOf(
+						new DecimalFormat("0.00").format(getSellingPrice()))
+				+ "]";
+	}
+
 	/**
-	 * This method parse a single input data line and build the corresponding
+	 * This method parse a single input data entry (i.e. an item on the list)
+	 * and build the corresponding
 	 * PurchasedItem object. It works removing the keywords and placeholder
 	 * once a time, starting from "imported", then removing the unuseful "at",
 	 * then the quantity of items and their price. The final step only contains
-	 * the item name, useful to match the category against which apply the 
+	 * the item name, useful to match the category against which to apply the 
 	 * taxes.
-	 * @param shoppingBasketLine The input line of an item.
+	 * @param shoppingBasketEntry The input line of an item.
 	 * @return The PurchasedItem object representing the input line.
 	 * @throws UnexpectedInputDataFormatException
 	 */
-	public static PurchasedItem parseLine(String shoppingBasketLine) 
+	public static PurchasedItem parseLine(String shoppingBasketEntry) 
 			throws UnexpectedInputDataFormatException {
 		boolean importedItem = false;
 		
 		//Check and remove "imported" keyword
-		String inputLine = shoppingBasketLine;
+		String inputLine = shoppingBasketEntry;
 		String tmpLine = removeSubstring(inputLine, " imported ");
 		if (tmpLine.length() != inputLine.length()) {
 			importedItem = true;
@@ -77,12 +145,19 @@ public class PurchasedItemParser
 		return firstReplace;
 	}
 	
+	/**
+	 * Compare the item name against the item names in the store's categories 
+	 * and find the one matching.
+	 * @param itemName
+	 * @return The category matching the item.
+	 */
 	private static ItemCategory matchCategory(String itemName) {
 		try
 		{
 			Store store = Store.getStore();
 			for (ItemCategory ic : ItemCategory.values()) {
-				//The OTHERS category has no elements. Do not analyze it.
+				//The OTHERS category has no elements. 
+				//Cannot analyze its items.
 				if(ic.equals(ItemCategory.OTHERS))
 					continue;
 				if(store.getItems(ic).contains(itemName))
@@ -97,4 +172,8 @@ public class PurchasedItemParser
 			return null; //Unuseful. Added to avoid compile error
 		}
 	}
+
+	private double finalPrice = 0.0;
+	private int quantity = 0;
+	private boolean imported = false;
 }

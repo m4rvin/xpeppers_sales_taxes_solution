@@ -1,43 +1,44 @@
 import static org.junit.Assert.*;
 import me.danieleangelucci.commons.AppConfig;
-import me.danieleangelucci.commons.PurchasedItemParser;
-import me.danieleangelucci.commons.UnexpectedInputDataFormatException;
 import me.danieleangelucci.shopping.ItemCategory;
-import me.danieleangelucci.shopping.PurchasedItem;
-import me.danieleangelucci.shopping.Store;
-import me.danieleangelucci.shopping.UnloadableStoreException;
+import me.danieleangelucci.shopping.controller.StoreHandler;
+import me.danieleangelucci.shopping.controller.UnexpectedInputDataFormatException;
+import me.danieleangelucci.shopping.model.PurchasedItem;
+import me.danieleangelucci.shopping.model.UnloadableStoreException;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.mockito.Mockito.*;
 
 
 
 public class PurchasedItemTest
 {
+	public StoreHandler sHandler = new StoreHandler();
+
 	@Before
 	public void initialize(){
+		AppConfig.categoriesFilePath = "categories.json";
 		try
 		{
-			AppConfig.categoriesFilePath = "categories.json";
-			Store store = Store.getStore();
+			sHandler.initializeStore();
 		} catch (UnloadableStoreException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail();
 		}
 	}
 	
 	@Test
+	/**
+	 * Test the parsing method correctly consider the two decimal digits.
+	 */
 	public void testPriceTwoDigitsParsing()
 	{
 		String testInput = "1 bottle of something at 15.00";
 		PurchasedItem parsedPItem = null;
 		try
 		{
-			parsedPItem = PurchasedItemParser.parseLine(testInput);
+			parsedPItem = PurchasedItem.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
 			e.printStackTrace();
@@ -50,13 +51,17 @@ public class PurchasedItemTest
 	}
 	
 	@Test
+	/**
+	 * Test the parsing method correctly parse non imported item in a known 
+	 * category.
+	 */
 	public void testNonImportedKnownCategoryPurchasedItemParsing()
 	{
 		String testInput = "1 book at 12.49";
 		PurchasedItem parsedPItem = null;
 		try
 		{
-			parsedPItem = PurchasedItemParser.parseLine(testInput);
+			parsedPItem = PurchasedItem.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
 			e.printStackTrace();
@@ -71,13 +76,17 @@ public class PurchasedItemTest
 	}
 	
 	@Test
+	/**
+	 * Test the parsing method correctly parse a non imported item from OTHERS
+	 * category.
+	 */
 	public void testNonImportedUnknownCategoryPurchasedItemParsing()
 	{
 		String testInput = "1 music CD at 14.99";
 		PurchasedItem parsedPItem = null;
 		try
 		{
-			parsedPItem = PurchasedItemParser.parseLine(testInput);
+			parsedPItem = PurchasedItem.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
 			e.printStackTrace();
@@ -92,13 +101,17 @@ public class PurchasedItemTest
 	}
 	
 	@Test
+	/**
+	 * Test the parsing method correctly parse an imported item from a 
+	 * category in the store.
+	 */
 	public void testImportedKnownCategoryPurchasedItemParsing()
 	{
 		String testInput = "1 box of imported chocolates at 11.25";
 		PurchasedItem parsedPItem = null;
 		try
 		{
-			parsedPItem = PurchasedItemParser.parseLine(testInput);
+			parsedPItem = PurchasedItem.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
 			e.printStackTrace();
@@ -113,13 +126,17 @@ public class PurchasedItemTest
 	}
 	
 	@Test
+	/**
+	 * Test the parsing method correctly parse an imported item from the OTHERS 
+	 * category.
+	 */
 	public void testImportedUnknownCategoryPurchasedItemParsing()
 	{
 		String testInput = "1 imported bottle of perfume at 27.99";
 		PurchasedItem parsedPItem = null;
 		try
 		{
-			parsedPItem = PurchasedItemParser.parseLine(testInput);
+			parsedPItem = PurchasedItem.parseLine(testInput);
 		} catch (UnexpectedInputDataFormatException e)
 		{
 			e.printStackTrace();

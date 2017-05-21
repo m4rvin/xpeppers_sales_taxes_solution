@@ -1,4 +1,6 @@
-package me.danieleangelucci.shopping;
+package me.danieleangelucci.shopping.model;
+
+import me.danieleangelucci.shopping.ItemCategory;
 
 public class Item
 {
@@ -9,7 +11,6 @@ public class Item
 		this.category = category;
 		this.sellingPrice = sellingPrice;
 	}
-	
 	
 	public String getName()
 	{

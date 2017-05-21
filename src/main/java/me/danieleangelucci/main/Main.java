@@ -1,52 +1,73 @@
 package me.danieleangelucci.main;
 
+import java.util.List;
+
 import me.danieleangelucci.commons.AppConfig;
-import me.danieleangelucci.shopping.ShoppingBasketAnalyzer;
-import me.danieleangelucci.shopping.Store;
-import me.danieleangelucci.shopping.UnloadableStoreException;
-import me.danieleangelucci.shopping.UnreadableInputFileException;
+import me.danieleangelucci.shopping.controller.ShoppingBasketHandler;
+import me.danieleangelucci.shopping.controller.StoreHandler;
+import me.danieleangelucci.shopping.model.EmptyShoppingBasketException;
+import me.danieleangelucci.shopping.model.Item;
+import me.danieleangelucci.shopping.model.ShoppingBasket;
+import me.danieleangelucci.shopping.model.UnloadableStoreException;
+import me.danieleangelucci.shopping.model.UnreadableInputFileException;
+import me.danieleangelucci.shopping.view.ShoppingBasketViewer;
 
 public class Main
 {
 
 	public static void main(String[] args)
 	{
-		
-		checkCommandlineArgs(args);
-		
-		AppConfig.categoriesFilePath = args[0];
-		AppConfig.inputFilePath = args[1];
+		System.out.println("\nWelcome to \"Sales taxes problem\"!\n");
+		readConfiguration(args);
 
-		System.out.println("Welcome to \"Sales taxes problem\"!");
-		System.out.println("Loading categories file: " + AppConfig.categoriesFilePath);
-		System.out.println("Using input file: " + AppConfig.inputFilePath);
-		
+		//Load the store (i.e. categories and products in the store)
+		StoreHandler storeHandler = new StoreHandler();
 		try
 		{
-			Store store = Store.getStore();
+			storeHandler.initializeStore();
 		} catch (UnloadableStoreException e)
 		{
 			e.printStackTrace();
 			System.exit(1);
 		}
 		
-		ShoppingBasketAnalyzer sbAnalyzer = new ShoppingBasketAnalyzer();
+		//Create a controller and parse the shopping basket from the input file.
+		ShoppingBasketHandler sbHandler = new ShoppingBasketHandler(new ShoppingBasket(), new ShoppingBasketViewer());
 		try
 		{
-			sbAnalyzer.parsePurchasedItemFromInputFile();
+			sbHandler.parseShoppingBasketItemsFromInputFile();
 		} catch (UnreadableInputFileException e)
 		{
 			e.printStackTrace();
 			System.exit(1);
 		}
-		sbAnalyzer.computeFinalPriceOfPurchasedItem();
-		sbAnalyzer.printPurchasedItemFromInputFile();
-		//TODO
-		sbAnalyzer.formatReceipt();
-
 		
+		//Apply sales taxes to the shopping basket items.
+		sbHandler.computeFinalPriceOnShoppingBasketItems();
+		
+		//Retrieve the shopping basket items and produce the receipt.
+		List<? extends Item> itemList = null;
+		try
+		{
+			itemList = sbHandler.getShoppingBasketItems();
+		} catch (EmptyShoppingBasketException e)
+		{
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
+		System.out.println("\nRECEIPT:\n");
+		sbHandler.showReceipt(itemList);
 	}
 	
+	private static void readConfiguration(String[] args) {
+		checkCommandlineArgs(args);
+		AppConfig.categoriesFilePath = args[0];
+		AppConfig.inputFilePath = args[1];
+		
+		System.out.println("Loading categories file: " + AppConfig.categoriesFilePath);
+		System.out.println("Using input file: " + AppConfig.inputFilePath + "\n");
+	}
 	
 	private static void checkCommandlineArgs(String[] args) {
 		
