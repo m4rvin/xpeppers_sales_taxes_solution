@@ -15,14 +15,17 @@ public class ShoppingBasketViewer implements ShoppingBasketViewerInterface
 		double totalPrice = 0.0;
 		
 		for (PurchasedItem pi : (List<PurchasedItem>)purchasedItems) {
+			//Prepare output string for the selected item
 			String output = Integer.toString(pi.getQuantity()).concat(" ");
 			if(pi.isImported())
 				output = output.concat("imported ");
 			output = output.concat(pi.getName()).concat(": ");
 			output = output.concat(String.valueOf(
 					DECIMAL_FORMAT.format(pi.getFinalPrice())));
+			//Add the output string to the final output
 			itemList.add(output);
 			
+			//Update total taxes and total price
 			totalSalestaxes += pi.getFinalPrice() - pi.getSellingPrice();
 			totalPrice += pi.getFinalPrice();
 		}
