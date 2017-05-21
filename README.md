@@ -7,4 +7,4 @@ From the folder containing the pom.xml file type `mvn package` (unit tests will 
 ## Clean
 From the folder containing the pom.xml file type `mvn clean`.
 ## Execute
-java -jar `path_to_jar_with_dependencies` `categories_filepath` `input_filepath`(e.g. `java -jar target/XPeppersSalesTaxes-0.0.1-SNAPSHOT-jar-with-dependencies.jar categories.json input1.txt`)
+java -jar `path_to_jar_with_dependencies` `categories_filepath` `input_filepath`(e.g. `java -jar target/XPeppersSalesTaxes-1.0.0-SNAPSHOT-jar-with-dependencies.jar categories.json input1.txt`)
