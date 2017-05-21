@@ -20,6 +20,7 @@ public class Main
 		System.out.println("\nWelcome to \"Sales taxes problem\"!\n");
 		readConfiguration(args);
 
+		//Load the store (i.e. categories and products in the store)
 		StoreHandler storeHandler = new StoreHandler();
 		try
 		{
@@ -30,6 +31,7 @@ public class Main
 			System.exit(1);
 		}
 		
+		//Create a controller and parse the shopping basket from the input file.
 		ShoppingBasketHandler sbHandler = new ShoppingBasketHandler(new ShoppingBasket(), new ShoppingBasketViewer());
 		try
 		{
@@ -39,8 +41,11 @@ public class Main
 			e.printStackTrace();
 			System.exit(1);
 		}
+		
+		//Apply sales taxes to the shopping basket items.
 		sbHandler.computeFinalPriceOnShoppingBasketItems();
 		
+		//Retrieve the shopping basket items and produce the receipt.
 		List<? extends Item> itemList = null;
 		try
 		{
