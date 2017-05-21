@@ -25,18 +25,6 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.0.2</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>me.danieleangelucci.main.Main</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -69,11 +57,6 @@
 	</build>
 	
   <dependencies>
-  <dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>2.7.22</version>
-		</dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
