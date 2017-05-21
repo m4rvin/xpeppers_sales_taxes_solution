@@ -32,13 +32,22 @@ public class ShoppingBasket implements ShoppingBasketInterface
 		this.purchasedItems.add((PurchasedItem)pItem);
 	}
 	
-	
+	/**
+	 * Apply the specified tax_rate on the specified item.
+	 * @param pi The item on which apply the tax_rate
+	 * @param tax_rate
+	 */
 	private void applyTax(PurchasedItem pi, double tax_rate) {
 		double salesTax = pi.getSellingPrice() * tax_rate;
 		salesTax = roundSalesTax(salesTax);
 		pi.setFinalPrice(pi.getFinalPrice() + salesTax);
 	}
 	
+	/**
+	 * Apply rounding of taxes to the nearest 0.05.
+	 * @param salesTax The tax value to round.
+	 * @return The rounded tax value.
+	 */
 	private double roundSalesTax(double salesTax) {
 		return salesTax = Math.ceil(salesTax / ShoppingBasket.TAX_ROUNDING_VALUE) * ShoppingBasket.TAX_ROUNDING_VALUE;
 	}
