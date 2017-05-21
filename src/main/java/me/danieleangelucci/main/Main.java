@@ -33,7 +33,7 @@ public class Main
 		ShoppingBasketHandler sbHandler = new ShoppingBasketHandler(new ShoppingBasket(), new ShoppingBasketViewer());
 		try
 		{
-			sbHandler.parsePurchasedItemFromInputFile();
+			sbHandler.parseShoppingBasketItemsFromInputFile();
 		} catch (UnreadableInputFileException e)
 		{
 			e.printStackTrace();

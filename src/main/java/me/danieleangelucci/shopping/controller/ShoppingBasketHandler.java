@@ -26,30 +26,38 @@ public class ShoppingBasketHandler
 		this.sbViewer = sbViewer;
 	}
 	
+	/**
+	 * Update the shopping basket items computing their final price.
+	 */
 	public void computeFinalPriceOnShoppingBasketItems() {
 		this.shoppingBasket.computeFinalPrice();
 	}
 	
+	/**
+	 * Retrieve the items contained in the shopping basket.
+	 * @return The list of items in the shopping basket.
+	 * @throws EmptyShoppingBasketException if the shopping basket is empty.
+	 */
 	public List<? extends Item> getShoppingBasketItems() throws EmptyShoppingBasketException {
 		return this.shoppingBasket.getShoppingBasketItems();
 	} 
 	
-	public void parsePurchasedItemFromInputFile() 
+	/**
+	 * Load the shopping basket items from the data file.
+	 * @throws UnreadableInputFileException
+	 */
+	public void parseShoppingBasketItemsFromInputFile() 
 			throws UnreadableInputFileException {
-		/*//Avoid parsing the same input file more than once.
-		if(purchasedItems.size() != 0)
-			return;*/
-		
 		Path inputFilepath = Paths.get(AppConfig.inputFilePath);
-		
 		Charset charset = Charset.forName("US-ASCII");
+		
 		try 
 		(BufferedReader reader = 
 		Files.newBufferedReader(inputFilepath, charset)) {
 		    String line = null;
 		    while ((line = reader.readLine()) != null) {
-		        PurchasedItem pItem = PurchasedItem.parseLine(line);
-		        shoppingBasket.put(pItem);
+		        Item item = PurchasedItem.parseLine(line);
+		        shoppingBasket.put(item);
 		    }
 		} catch (IOException | UnexpectedInputDataFormatException e) {
 			e.printStackTrace();
@@ -57,8 +65,12 @@ public class ShoppingBasketHandler
 		}
 	}
 	
-	public void showReceipt(List<? extends Item> purchasedItems) {
-		this.sbViewer.formatReceipt(purchasedItems);
+	/**
+	 * Invoke the method to render the receipt of the shopping basket.
+	 * @param shoppingBasketItems
+	 */
+	public void showReceipt(List<? extends Item> shoppingBasketItems) {
+		this.sbViewer.formatReceipt(shoppingBasketItems);
 	}
 
 	
