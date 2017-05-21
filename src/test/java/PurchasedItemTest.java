@@ -4,13 +4,10 @@ import me.danieleangelucci.shopping.ItemCategory;
 import me.danieleangelucci.shopping.controller.StoreHandler;
 import me.danieleangelucci.shopping.controller.UnexpectedInputDataFormatException;
 import me.danieleangelucci.shopping.model.PurchasedItem;
-import me.danieleangelucci.shopping.model.Store;
 import me.danieleangelucci.shopping.model.UnloadableStoreException;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.mockito.Mockito.*;
 
 
 
@@ -32,6 +29,9 @@ public class PurchasedItemTest
 	}
 	
 	@Test
+	/**
+	 * Test the parsing method correctly consider the two decimal digits.
+	 */
 	public void testPriceTwoDigitsParsing()
 	{
 		String testInput = "1 bottle of something at 15.00";
@@ -51,6 +51,10 @@ public class PurchasedItemTest
 	}
 	
 	@Test
+	/**
+	 * Test the parsing method correctly parse non imported item in a known 
+	 * category.
+	 */
 	public void testNonImportedKnownCategoryPurchasedItemParsing()
 	{
 		String testInput = "1 book at 12.49";
@@ -72,6 +76,10 @@ public class PurchasedItemTest
 	}
 	
 	@Test
+	/**
+	 * Test the parsing method correctly parse a non imported item from OTHERS
+	 * category.
+	 */
 	public void testNonImportedUnknownCategoryPurchasedItemParsing()
 	{
 		String testInput = "1 music CD at 14.99";
@@ -93,6 +101,10 @@ public class PurchasedItemTest
 	}
 	
 	@Test
+	/**
+	 * Test the parsing method correctly parse an imported item from a 
+	 * category in the store.
+	 */
 	public void testImportedKnownCategoryPurchasedItemParsing()
 	{
 		String testInput = "1 box of imported chocolates at 11.25";
@@ -114,6 +126,10 @@ public class PurchasedItemTest
 	}
 	
 	@Test
+	/**
+	 * Test the parsing method correctly parse an imported item from the OTHERS 
+	 * category.
+	 */
 	public void testImportedUnknownCategoryPurchasedItemParsing()
 	{
 		String testInput = "1 imported bottle of perfume at 27.99";
